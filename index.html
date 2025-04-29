@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>captcha Generator</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background: linear-gradient(135deg, #cfd9df, #e2ebf0);
+        gap: 15px;
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 20px;
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      .user {
+        background-color: #fff;
+        height: 70px;
+        width: 260px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .user input {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 8px 10px;
+        font-size: 16px;
+        width: 90%;
+        outline: none;
+      }
+
+      .user input:focus {
+        border: 2px solid #4a90e2;
+      }
+
+      .display {
+        font-family: "Courier New", Courier, monospace;
+        font-weight: bold;
+        font-size: 28px;
+        letter-spacing: 8px;
+        color: #333;
+        background: linear-gradient(135deg, #fdfbfb, #ebedee);
+        padding: 12px 20px;
+        margin: 10px 0;
+        border: 2px dashed #999;
+        border-radius: 10px;
+        width: 260px;
+        text-align: center;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+        user-select: none;
+      }
+
+      .refresh {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #ffffff;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      .refresh:hover {
+        background-color: #f0f0f0;
+      }
+
+      .refresh i {
+        font-size: 22px;
+        color: #4a90e2;
+      }
+
+      #btn {
+        background-color: #4a90e2;
+        color: #ffffff;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      #btn:hover {
+        background-color: #357abd;
+      }
+    </style>
+  </head>
+  <body onload="generate()">
+    <h1 style="font-size: 15px">Please verify You Are a Human</h1>
+
+    <div class="user">
+      <input class="user-input" type="text" />
+    </div>
+
+    <div class="refresh">
+      <i
+        class="fa-solid fa-arrows-rotate"
+        style="cursor: pointer"
+        onclick="generate()"
+      ></i>
+    </div>
+
+    <div class="display"></div>
+
+    <button type="submit" id="btn" onclick="enteredmsg()">Submit</button>
+
+    <script>
+      let captcha;
+
+      function generate() {
+        document.querySelector(".user-input").value = "";
+
+        captcha = document.querySelector(".display");
+
+        var randomchar =
+          "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        var uniquechar = "";
+
+        for (let i = 0; i < 5; i++) {
+          uniquechar += randomchar.charAt(Math.random() * randomchar.length);
+        }
+
+        captcha.innerHTML = uniquechar;
+      }
+
+      function enteredmsg() {
+        const userinput = document.querySelector(".user-input").value;
+
+        if (userinput == "") {
+          alert("Please Enter The Captcha Showned below!!");
+        } else if (captcha.innerHTML == userinput) {
+          alert("You Are a Human");
+          generate();
+        } else {
+          alert("You are Not a Human");
+          generate();
+        }
+      }
+    </script>
+  </body>
+</html>
